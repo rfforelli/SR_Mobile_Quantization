@@ -32,7 +32,13 @@ conda env create -f tfnightly.yaml
 3. Quantization-Aware Training: Insert fake quantization nodes during training. PSNR increases to **30.15dB**, which means the model size becomes 4x smaller with only 0.07dB performance loss.
 
 # Prepare DIV2K Data
-Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and put DIV2K in data folder. Then the structure should look like:
+Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and put DIV2K in data folder. You can use (or edit) the provided script:
+```
+cd data
+./download_div2k_data.sh
+```
+
+Then the structure should look like:
 > data
 >> DIV2K
 >>> DIV2K\_train\_HR
