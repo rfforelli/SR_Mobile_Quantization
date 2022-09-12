@@ -72,6 +72,10 @@ You can edit and run the Makefile:
 ```bash
 make train-base7_D4C28_bs16ps64_lr1e-3
 ```
+If you have any issue in training with a GPU, please try:
+```bash
+make train-nogpu-base7_D4C28_bs16ps64_lr1e-3
+```
 or
 
 ```bash
