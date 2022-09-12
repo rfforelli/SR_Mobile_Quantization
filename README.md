@@ -56,6 +56,16 @@ Then the structure should look like:
 
 >>>>> 0900x2.png
 
+# Pre-trained model
+
+The training script saves the models as `.pb` files in the directory `experiment`. The authors also provide a pre-trained model in the directory `experiment`.
+
+You can also convert `.pb` files to `.hdf5` files. Edit `experiment/Makefile` (if necessary) and then:
+```
+cd experiment
+make run
+```
+
 # Training
 ```bash
 python train.py --opt options/train/base7.yaml --name base7_D4C28_bs16ps64_lr1e-3 --scale 3  --bs 16 --ps 64 --lr 1e-3 --gpu_ids 0
