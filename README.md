@@ -35,7 +35,7 @@ conda env create -f tfnightly.yaml
 Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and put DIV2K in data folder. You can use (or edit) the provided script:
 ```
 cd data
-./download_div2k_data.sh
+make download
 ```
 
 Then the structure should look like:
