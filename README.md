@@ -68,7 +68,7 @@ make run
 
 # Training
 
-You can edit and run the Makefile:
+You can edit (if necessary) and run the Makefile:
 ```bash
 make train-base7_D4C28_bs16ps64_lr1e-3
 ```
