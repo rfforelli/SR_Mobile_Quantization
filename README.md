@@ -67,6 +67,13 @@ make run
 ```
 
 # Training
+
+You can edit and run the Makefile:
+```bash
+make train-base7_D4C28_bs16ps64_lr1e-3
+```
+or
+
 ```bash
 python train.py --opt options/train/base7.yaml --name base7_D4C28_bs16ps64_lr1e-3 --scale 3  --bs 16 --ps 64 --lr 1e-3 --gpu_ids 0
 ```
