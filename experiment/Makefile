@@ -5,12 +5,12 @@ help:
 	@echo "INFO: make <tab> for targets"
 .PHONY: help
 
-run:
+convert:
 	TF_CPP_MIN_LOG_LEVEL=3 TF_XLA_FLAGS=--tf_xla_enable_xla_devices \
 	python convert_pb_to_hdf5.py \
 		--pb_dir ${PB_DIR} \
 		--hdf5_file ${HDF5_FILE}
-.PHONY: run
+.PHONY: convert
 
 show:
 	netron ${HDF5_FILE}
