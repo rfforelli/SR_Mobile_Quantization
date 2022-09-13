@@ -1,5 +1,9 @@
+import sys
 import argparse
 import tensorflow as tf
+sys.path.append('../')
+
+import solvers.networks.base7
 
 if __name__ == '__main__':
 

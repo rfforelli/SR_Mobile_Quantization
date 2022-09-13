@@ -35,7 +35,7 @@ conda env create -f tfnightly.yaml
 Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and put DIV2K in data folder. You can use (or edit) the provided script:
 ```
 cd data
-./download_div2k_data.sh
+make download
 ```
 
 Then the structure should look like:
@@ -67,6 +67,17 @@ make run
 ```
 
 # Training
+
+You can edit (if necessary) and run the Makefile:
+```bash
+make train-base7_D4C28_bs16ps64_lr1e-3
+```
+If you have any issue in training with a GPU, please try:
+```bash
+make train-nogpu-base7_D4C28_bs16ps64_lr1e-3
+```
+or
+
 ```bash
 python train.py --opt options/train/base7.yaml --name base7_D4C28_bs16ps64_lr1e-3 --scale 3  --bs 16 --ps 64 --lr 1e-3 --gpu_ids 0
 ```
