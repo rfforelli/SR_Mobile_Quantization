@@ -52,9 +52,14 @@ if __name__ == '__main__':
     lg.info('Create val dataset successfully!')
     lg.info('Validating: [{}] iterations for each epoch'.format(len(val_data)))
         
+    height = 216
+    #args['datasets']['dimensions']['LR']['height']
+    width = 680
+    #args['datasets']['dimensions']['LR']['width']
+    dimensions = [height, width]
     # create solver
     lg.info('Preparing for experiment: [{}]'.format(args['name']))
-    solver = Solver(args, train_data, val_data, writer)
+    solver = Solver(args, dimensions, train_data, val_data, writer)
 
     # train
     lg.info('Start training...')

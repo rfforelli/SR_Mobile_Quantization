@@ -6,8 +6,8 @@ import tensorflow.keras.backend as K
 import numpy as np
 
 
-def base7(scale=3, in_channels=3, num_fea=28, m=4, out_channels=3):
-    inp = Input(shape=(None, None, 3)) 
+def base7(scale=3, in_height=216, in_width=680, in_channels=3, num_fea=28, m=4, out_channels=3):
+    inp = Input(shape=(in_height, in_width, 3))
     upsample_func = Lambda(lambda x_list: tf.concat(x_list, axis=3))
     upsampled_inp = upsample_func([inp]*(scale**2))
 
@@ -21,12 +21,12 @@ def base7(scale=3, in_channels=3, num_fea=28, m=4, out_channels=3):
     x = Conv2D(out_channels*(scale**2), 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
     x = Conv2D(out_channels*(scale**2), 3, padding='same', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
     x = Add()([upsampled_inp, x])
-    
+
     depth_to_space = Lambda(lambda x: tf.nn.depth_to_space(x, scale))
     out = depth_to_space(x)
     clip_func = Lambda(lambda x: K.clip(x, 0., 255.))
     out = clip_func(out)
-    
+
     return Model(inputs=inp, outputs=out)
 
 if __name__ == '__main__':

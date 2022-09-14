@@ -37,7 +37,7 @@ class Solver():
             return tfmot.quantization.keras.quantize_annotate_layer(layer, quantize_config=NoOpQuantizeConfig())
         return layer
 
-    def __init__(self, args, train_data, val_data, writer):
+    def __init__(self, args, dimensions, train_data, val_data, writer):
         super(Solver, self).__init__()
         self.opt = args['solver']
         self.qat = self.opt['qat']
@@ -68,7 +68,7 @@ class Solver():
             with tfmot.quantization.keras.quantize_scope({'NoOpQuantizeConfig': NoOpQuantizeConfig, 'depth_to_space': depth_to_space, 'tf': tf}):
                 self.model = tfmot.quantization.keras.quantize_apply(annotate_model)
         else:
-            self.model = create_model(args['networks'])
+            self.model = create_model(args['networks'], dimensions)
 
         self.lg.info('Create model successfully! Params: [{:.2f}]K'.format(self.model.count_params()/1e3))
 
