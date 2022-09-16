@@ -109,18 +109,18 @@ if __name__ == '__main__':
 
             img = np.expand_dims(img, axis=0) # This is to add one more dimension, batch = 1
 
-            print('INFO: Save: ./X_test.npy')
-            np.save('X_test.npy', img)
+            print('INFO: Save: ./test01_X_test_' + i_str + '.npy')
+            np.save('test01_X_test_' + i_str + '.npy', img)
 
             up_img = upsample_img(img, scale=SCALE)
             add_img = add_img(up_img, fltr)
             ds_img = depth_to_space_img(add_img, scale=3)
             c_img = clip_img(ds_img)
 
-            print('INFO: Save: ./input_' + i_str + '.jpg')
-            cv2.imwrite('./input_' + i_str + '.jpg', img[0])
-            print('INFO: Save: ./output_' + i_str + '.jpg')
-            cv2.imwrite('./output_' + i_str + '.jpg', c_img[0])
+            print('INFO: Save: ./test01_input_' + i_str + '.jpg')
+            cv2.imwrite('./test01_input_' + i_str + '.jpg', img[0])
+            print('INFO: Save: ./test01_output_' + i_str + '.jpg')
+            cv2.imwrite('./test01_output_' + i_str + '.jpg', c_img[0])
 
             ##print(img)
             ##print(c_img)
