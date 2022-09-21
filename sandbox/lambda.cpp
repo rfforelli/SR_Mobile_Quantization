@@ -1,23 +1,23 @@
 int* upsample_img(int* img, int scale){
    
-   //takes in 5d vector: [num_vectors][N][H][W][C]
-   int num_vectors = sizeof(img)/sizeof(a[0]);
+   //takes in 4d vector: [N][H][W][C]
    int N = sizeof(img[0])/sizeof(img[0][0]);
    int H = sizeof(img[0][0])/sizeof(img[0][0][0]);
    int W = sizeof(img[0][0][0])/sizeof(img[0][0][0][0]);
    int C = sizeof(img[0][0][0][0])/sizeof(img[0][0])[0][0][0];
-   int img_out = [N][H][W][C*num_vectors]
-   for (v = 0; v < num_vectors; v++) {
-      for (n = 0; n < N; n++) {
-         for (h = 0; h < H; h++) {
+   int upsampled_img = [N][H][W][C*scale*scale]
+
+    for (n = 0; n < N; n++) {
+        for (h = 0; h < H; h++) {
             for (w = 0; w < W; w++) {
-                for (c = 0; c < C; c++) {
-                    img_out[n][h][w][v*C + c] = img[v][n][h][w][c]
+                for (v = 0; v < scale*scale; v++) {
+                    for (c = 0; c < C; c++) {
+                        upsampled_img[n][h][w][v*scale*scale + c] = img[n][h][w][c]
+                    }
                 }
             }
-         }
-      } 
-   }  
+        } 
+    }  
 }
 
 int** depth_to_space(int** img, block_size){
