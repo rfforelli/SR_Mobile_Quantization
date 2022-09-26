@@ -1,14 +1,77 @@
 #include <iostream>
 #include <vector>
 #include <assert.h>
+
+///////////////////////////////////////////////////////////
+//////helper functions for debugging, not for synthesis////
+///////////////////////////////////////////////////////////
+void helper_sum_img (std::vector<std::vector<std::vector<std::vector<int>>>> img){
+    //get incoming image dimensions
+    int N = img.size();
+    int H = img[0].size();
+    int W = img[0][0].size();
+    int C = img[0][0][0].size();
+    
+
+    std::vector<std::vector<std::vector<std::vector<int>>>> img_out(N,std::vector<std::vector<std::vector<int>>>(H,(std::vector<std::vector<int>>(W, std::vector<int>(C, 0)))));
+    int sum = 0;
+    for (int n = 0; n < N; n++) {
+        for (int h = 0; h < H; h++) {
+            for (int w = 0; w < W; w++) {
+                for (int c = 0; c < C; c++) {
+                    sum =  sum+ img[n][h][w][c];
+                }
+            }
+        }
+    }
+    std::cout << "Sum of image is: " << sum;
+}
+
+void helper_print_4x4 (std::vector<std::vector<std::vector<std::vector<int>>>> img){
+
+    int N = img.size();
+    int H = img[0].size();
+    int W = img[0][0].size();
+    int C = img[0][0][0].size();
+    assert(C > 4 && W > 4);
+    std::cout << N;
+    std::cout << "\n";
+    std::cout << H;
+    std::cout << "\n";
+    std::cout << W;
+    std::cout << "\n";
+    std::cout << C;
+    std::cout << "\n";
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            std::cout << img[0][0][i][j];
+            std::cout << " ";
+        }
+        std::cout << "\n";
+    }
+}
+
+std::vector<std::vector<std::vector<std::vector<int>>>> identity_img (std::vector<std::vector<std::vector<std::vector<int>>>> img){
+    return img;
+}
+//////helper functions for debugging, not for synthesis////
+///////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////
+/////////////////////LAMBDA LAYERS/////////////////////////
+
 std::vector<std::vector<std::vector<std::vector<int>>>> upsample_img(std::vector<std::vector<std::vector<std::vector<int>>>> img, int scale){
-   std::cout << "safe enter upsample \n";
+
    int N = img.size();
    int H = img[0].size();
    int W = img[0][0].size();
    int C = img[0][0][0].size();
    int new_C = C * scale * scale;
-   std::cout << "upsampled size: " << N << " " << H << " " << W  << " " << new_C << "\n";
+
    std::vector<std::vector<std::vector<std::vector<int>>>> upsampled_img(N,std::vector<std::vector<std::vector<int>>>(H,(std::vector<std::vector<int>>(W, std::vector<int>(new_C, 0)))));
    for (int n = 0; n < N; n++) {
         for (int h = 0; h < H; h++) {
@@ -53,11 +116,13 @@ std::vector<std::vector<std::vector<std::vector<int>>>> depth_to_space(std::vect
             }
         }
     }
+
     //remap the intermediate list with the correct indices
+    //remap the first 216
     for (int counter=0; counter <216; counter++){
         for (auto it = img_out.begin(); it != img_out.end(); ++it){
-            for (auto it1 = it.begin(); it1 != it.end(); ++it1){
-                for (auto it2 = it->begin(); it2 != it1->end(); ++it2){
+            for (auto it1 = it->begin(); it1 != it->end(); ++it1){
+                for (auto it2 = it1->begin(); it2 != it1->end(); ++it2){
                     for (auto it3 = it2->begin(); it3 != it2->end(); ++it3){
                         *it3 = tmp_list[counter*3]; 
                     }
@@ -66,10 +131,11 @@ std::vector<std::vector<std::vector<std::vector<int>>>> depth_to_space(std::vect
         }
     }
 
+    //remap the next 216
     for (int counter=216; counter <432; counter++){
         for (auto it = img_out.begin(); it != img_out.end(); ++it){
-            for (auto it1 = it.begin(); it1 != it.end(); ++it1){
-                for (auto it2 = it->begin(); it2 != it1->end(); ++it2){
+            for (auto it1 = it->begin(); it1 != it->end(); ++it1){
+                for (auto it2 = it1->begin(); it2 != it1->end(); ++it2){
                     for (auto it3 = it2->begin(); it3 != it2->end(); ++it3){
                         *it3 = tmp_list[(counter-216)*3+1]; 
                     }
@@ -77,10 +143,12 @@ std::vector<std::vector<std::vector<std::vector<int>>>> depth_to_space(std::vect
             }
         }
     }
+
+    //remap the next 216
     for (int counter=432; counter <648; counter++){
         for (auto it = img_out.begin(); it != img_out.end(); ++it){
-            for (auto it1 = it.begin(); it1 != it.end(); ++it1){
-                for (auto it2 = it->begin(); it2 != it1->end(); ++it2){
+            for (auto it1 = it->begin(); it1 != it->end(); ++it1){
+                for (auto it2 = it1->begin(); it2 != it1->end(); ++it2){
                     for (auto it3 = it2->begin(); it3 != it2->end(); ++it3){
                         *it3 = tmp_list[(counter-432)*3+2]; 
                     }
@@ -113,28 +181,6 @@ std::vector<std::vector<std::vector<std::vector<int>>>> add_img (std::vector<std
     return img_out;
 }
 
-void helper_sum_img (std::vector<std::vector<std::vector<std::vector<int>>>> img){
-    //get incoming image dimensions
-    int N = img.size();
-    int H = img[0].size();
-    int W = img[0][0].size();
-    int C = img[0][0][0].size();
-    
-
-    std::vector<std::vector<std::vector<std::vector<int>>>> img_out(N,std::vector<std::vector<std::vector<int>>>(H,(std::vector<std::vector<int>>(W, std::vector<int>(C, 0)))));
-    int sum = 0;
-    for (int n = 0; n < N; n++) {
-        for (int h = 0; h < H; h++) {
-            for (int w = 0; w < W; w++) {
-                for (int c = 0; c < C; c++) {
-                    sum =  sum+ img[n][h][w][c];
-                }
-            }
-        }
-    }
-    std::cout << "Sum of image is: " << sum;
-}
-
 std::vector<std::vector<std::vector<std::vector<int>>>> clip_img (std::vector<std::vector<std::vector<std::vector<int>>>> img, int lower, int upper){
     //get incoming image dimensions
     int N = img.size();
@@ -157,44 +203,11 @@ std::vector<std::vector<std::vector<std::vector<int>>>> clip_img (std::vector<st
     return img_out;
 }
 
-void helper_print_4x4 (std::vector<std::vector<std::vector<std::vector<int>>>> img){
-    std::cout << " print enter \n";
-    int N = img.size();
-    int H = img[0].size();
-    int W = img[0][0].size();
-    int C = img[0][0][0].size();
-    assert(C > 4 && W > 4);
-    std::cout << N;
-    std::cout << "\n";
-    std::cout << H;
-    std::cout << "\n";
-    std::cout << W;
-    std::cout << "\n";
-    std::cout << C;
-    std::cout << "\n";
-
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            std::cout << img[0][0][i][j];
-            std::cout << " ";
-        }
-        std::cout << "\n";
-    }
-    std::cout << "safe print exit \n";
-}
-
-std::vector<std::vector<std::vector<std::vector<int>>>> identity_img (std::vector<std::vector<std::vector<std::vector<int>>>> img){
-    return img;
-}
 int main() {
     int N = 1, H = 40, W = 4, C = 4;
     std::vector<std::vector<std::vector<std::vector<int>>>> img(N,std::vector<std::vector<std::vector<int>>>(H,(std::vector<std::vector<int>>(W, std::vector<int>(C, 200)))));
     // print_4x4(img);
     // print_4x4(upsample_img(img, 3));
     helper_print_4x4(add_img(img,img));
-
-    
 
 }
