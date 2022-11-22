@@ -11,6 +11,7 @@ import cv2
 import os
 import os.path as osp
 import pickle
+from matplotlib import pyplot as plt
 
 from tensorflow.keras.layers import Lambda, Input, InputLayer
 from tensorflow.keras.models import Model, load_model
@@ -84,7 +85,14 @@ class Solver():
     def train(self):
         if self.resume == False:
             self.model.compile(optimizer=self.optimizer, loss=self.opt['loss'])
+        self.model.summary()
         history = self.model.fit(self.train_data, epochs=self.opt['epochs'], workers=self.opt['workers'], callbacks=self.callback, initial_epoch=self.state['current_epoch']+1)
+        plt.plot(history.history['loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train'], loc='upper left')
+        plt.savefig('./experiment/history.png')
 
     def scheduler(self, epoch):        
         if epoch in self.opt['lr_steps']:

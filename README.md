@@ -91,6 +91,11 @@ You can use tensorboard to monitor the training and validating process by:
 ```bash
 tensorboard --logdir Tensorboard
 ```
+# Quantization-Aware Training with QKeras
+For this model, you can simply use the following script to perform QAT:
+```bash
+make train-base7_qkeras_D4C28_bs16ps64_lr1e-3
+```
 
 # Quantization-Aware Training
 If you haven't worked with Tensorflow Lite and network quantization before, please refer to [official guideline](https://www.tensorflow.org/model_optimization/guide/quantization/training_example). This technology inserts fake quantization nodes to make the weights aware that themselves will be quantized. For this model, you can simply use the following script to perform QAT:
