@@ -1,0 +1,23 @@
+params:
+  activations_on_memory:
+  - sram
+  - sram
+  delta_n: 8.0
+  delta_p: 8.0
+  min_sram_size:
+  - 0
+  - 0
+  parameters_on_memory:
+  - sram
+  - sram
+  process: horowitz
+  rate: 2.0
+  rd_wr_on_io:
+  - false
+  - false
+  reference_accumulator: int32
+  reference_internal: int8
+  source_quantizers:
+  - int8
+  stress: 1.0
+type: energy

@@ -1,0 +1,29 @@
+activation:
+  binary: 1
+  quantized_relu(3,1): 3
+  quantized_relu(4,0): 4
+  quantized_relu(4,2): 4
+  quantized_relu(6,0): 6
+  quantized_relu(6,3): 6
+  quantized_relu(8,0): 8
+  quantized_relu(8,4): 8
+  quantized_relu(8,8): 8
+  quantized_relu_po2(4,4): 4
+  ternary: 2
+bias:
+  quantized_bits(4,0): 4
+  quantized_bits(6,0): 6
+  quantized_bits(8,0): 8
+  quantized_bits(8,8): 8
+  quantized_po2(4,8): 4
+kernel:
+  binary: 1
+  quantized_bits(2,1,1,alpha=1.0): 2
+  quantized_bits(4,0,alpha=1.0): 4
+  quantized_bits(6,0,alpha=1.0): 6
+  quantized_bits(8,0,alpha=1.0): 8
+  quantized_bits(8,8,alpha=1.0): 8
+  quantized_po2(4,1): 4
+  stochastic_binary: 1
+  stochastic_ternary: 2
+  ternary: 2

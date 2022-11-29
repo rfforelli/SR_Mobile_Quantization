@@ -1,0 +1,6 @@
+Activation:
+- 4
+Conv2D:
+- 4
+- 8
+- 4
