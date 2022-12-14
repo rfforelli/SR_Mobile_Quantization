@@ -70,11 +70,8 @@ if __name__ == '__main__':
 output_dir = 'autoqkeras_{mode}'.format(mode=mode)
 if pretrained:
   output_dir = '{}_pretrained'.format(output_dir)
-output_dir = './'#remove 
-project_dir = 'autoqkeras_random_pretrained'
 run_config = {
-  "directory":'./',
-  "project_name":project_dir,
+  "output_dir": output_dir,
   "goal": goal,
   "quantization_config": quantization_config,
   "learning_rate_optimizer": False,
