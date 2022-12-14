@@ -95,3 +95,15 @@ print("run config: ", run_config)
 autoqk = autoqkeras.AutoQKeras(model, metrics=['mae'], **run_config)
 epoch_end_call = Epoch_End_Callback(val_data, train_data, lg, val_step=1)
 autoqk.fit(train_data, validation_data=val_data, epochs=20, callbacks=[epoch_end_call, tf.keras.callbacks.TensorBoard("{output_dir}/tb_logs".format(output_dir=output_dir))])
+autoqk.results_summary(1)
+
+# further train the best model to 200 epochs total
+qmodel = autoqk.get_best_models(1)[0]
+qmodel.save('{}/autoq_best_model_20_epochs.h5'.format(project_dir))
+optimizer = tf.keras.optimizers.Adam(lr=1e-3)
+qmodel.compile(optimizer=optimizer, loss='mae')
+reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5,
+                          patience=20, min_lr=0.00001)
+
+qmodel.fit(train_data, validation_data = val_data,epochs=180, callbacks=[reduce_lr,epoch_end_call])
+qmodel.save('{}/autoq_best_model_200_epochs.h5'.format(project_dir))

@@ -64,7 +64,7 @@ if __name__ == '__main__':
     optimizer = tf.keras.optimizers.Adam(lr=1e-3)
     qmodel.compile(optimizer=optimizer, loss='mae')
     reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5,
-                              patience=5, min_lr=0.00001)
+                              patience=20, min_lr=0.00001)
 
-    qmodel.fit(train_data, validation_data = val_data,epochs=180, callbacks=[reduce_lr,epoch_end_call,tensorboard])
+    qmodel.fit(train_data, validation_data = val_data,epochs=180, callbacks=[reduce_lr,epoch_end_call])
     qmodel.save('keras_tuner_best_model_200_epochs.h5')
