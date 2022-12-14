@@ -16,8 +16,8 @@ The tuner is defined in [autoq.py](autoq.py) and is trained by running one of se
 
 ### Run Makefile
 The makefile allows you to choose the search algorithm and whether or not to start from a predefined float32 Keras model. 
-`make <bayesian | random | hyperband>`: Uses the tuner to search for the model using one of the algorithms and train models from scratch.
-`make pretrained_<bayesian | random | hyperband>`: Uses the tuner to search for the model using one of the algorithms and tunes the model from the keras weights.
+1. `make <bayesian | random | hyperband>`: Uses the tuner to search for the model using one of the algorithms and train models from scratch.
+2. `make pretrained_<bayesian | random | hyperband>`: Uses the tuner to search for the model using one of the algorithms and tunes the model from the keras weights.
 
 ## Visualizing results
 ### Tensorboard
